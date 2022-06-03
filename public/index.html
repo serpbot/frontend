@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="serp, google rank, seo serp, seo tool, serp history, serp page rank, serp checker" name="keywords"/>
+  <meta content="Quickly and cheaply verify the page rank of your website on Google and Bing search engines" />
+<!--  <link href="https://rsms.me/inter/inter.css" rel="stylesheet" >-->
+    <link href="/css/main.min.css" rel="stylesheet">
+</head>
+<body>
+  <script src="/dist/elm.js"></script>
+  <script>
+    var app = Elm.Main.init({
+      flags: {
+        year: new Date().getFullYear(),
+        storage: JSON.parse(localStorage.getItem("storage"))
+      }
+    })
+
+    app.ports.sendMessage.subscribe(function(message) {
+      switch (message.action) {
+        case "resetCaptcha":
+          hcaptcha.reset();
+          break;
+        case "getCaptchaResponse":
+          app.ports.messageReceiver.send(hcaptcha.getResponse());
+          break;
+        default:
+          break;
+      }
+    });
+
+    app.ports.loadCaptcha.subscribe(async function() {
+      requestAnimationFrame(function() {
+        try { hcaptcha.remove(); } catch (Exception){}
+        hcaptcha.render('h-captcha', { sitekey: 'a69c40b1-9341-4eee-9ea4-9c11b82dcf50' })
+      })
+    });
+
+    app.ports.loadJSGraph.subscribe(async function(message) {
+      requestAnimationFrame(function() {
+        generateCanvas(message[0], message[1]);
+      });
+    })
+
+    app.ports.save.subscribe(storage => {
+      localStorage.setItem('storage', JSON.stringify(storage))
+      app.ports.load.send(storage)
+    })
+
+    function generateCanvas(engine, trend) {
+      datasets = [];
+      trend.keywords.forEach(function (keyword) {
+        color = dynamicColors();
+        datasets.push({
+          label: keyword.label,
+          data: keyword.data,
+          backgroundColor: [
+            color
+          ],
+          borderColor: [
+            color
+          ],
+          borderWidth: 3
+        });
+      })
+      const ctx = document.getElementById(engine).getContext('2d');
+      const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: trend.labels,
+          datasets: datasets
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    var dynamicColors = function() {
+      var r = Math.floor(Math.random() * 255);
+      var g = Math.floor(Math.random() * 255);
+      var b = Math.floor(Math.random() * 255);
+      return "rgb(" + r + "," + g + "," + b + ")";
+    };
+  </script>
+  <script src="https://hcaptcha.com/1/api.js?render=explicit"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+</body>
+</html>
