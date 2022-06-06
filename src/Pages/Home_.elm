@@ -261,12 +261,17 @@ viewMain =
                                 , p
                                     [ Attr.class "ml-9 text-lg leading-6 font-medium text-gray-900"
                                     ]
-                                    [ text "Track competitors" ]
+                                    [ text "Open source" ]
                                 ]
                             , dd
                                 [ Attr.class "mt-2 ml-9 text-base text-gray-500"
                                 ]
-                                [ text "We make it easy to compare your website ranking with your competitors" ]
+                                [ text "The complete source code is available on ", a
+                                    [ Attr.href "https://github.com/serpbot"
+                                    , Attr.class "font-medium text-indigo-600 hover:text-indigo-500"
+                                    ]
+                                    [ text " github" ]
+                                ]
                             ]
                         , div
                             [ Attr.class "relative"
@@ -321,12 +326,12 @@ viewMain =
                                 , p
                                     [ Attr.class "ml-9 text-lg leading-6 font-medium text-gray-900"
                                     ]
-                                    [ text "Cheap" ]
+                                    [ text "Free" ]
                                 ]
                             , dd
                                 [ Attr.class "mt-2 ml-9 text-base text-gray-500"
                                 ]
-                                [ text "By using your own API key, we are able to keep prices down and pass the savings onto you" ]
+                                [ text "You can use this service for free, but there are certain limits (see FAQ)" ]
                             ]
                         , div
                             [ Attr.class "relative"
@@ -356,13 +361,13 @@ viewMain =
                             , dd
                                 [ Attr.class "mt-2 ml-9 text-base text-gray-500"
                                 ]
-                                [ text "We won't limit the amount of keywords that you monitor" ]
+                                [ text "We won't limit the amount of keywords that you monitor (see FAQ)" ]
                             ]
                         , div
                             [ Attr.class "relative"
                             ]
                             [ dt []
-                                [                                 {- Heroicon name: outline/check -}
+                                [
                                 svg
                                     [ SvgAttr.class "absolute h-6 w-6 text-green-500"
                                     , SvgAttr.fill "none"
@@ -386,13 +391,89 @@ viewMain =
                             , dd
                                 [ Attr.class "mt-2 ml-9 text-base text-gray-500"
                                 ]
-                                [ text "We won't limit the amount of websites that you can monitor" ]
+                                [ text "We won't limit the amount of websites that you can monitor (see FAQ)" ]
                             ]
                         ]
                     ]
                 ]
             ]
-        ,         {- This example requires Tailwind CSS v2.0+ -}
+        ,
+        div
+            [ Attr.class "bg-gray-50"
+            ]
+            [ div
+                [ Attr.class "max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-20 lg:px-8"
+                ]
+                [ div
+                    [ Attr.class "lg:grid lg:grid-cols-3 lg:gap-8"
+                    ]
+                    [ div []
+                        [ h2
+                            [ Attr.class "text-3xl font-extrabold text-gray-900"
+                            ]
+                            [ text "Frequently asked questions" ]
+                        , p
+                            [ Attr.class "mt-4 text-lg text-gray-500"
+                            ]
+                            [ text "Can’t find the answer you’re looking for? Reach out to our", a
+                                [ Attr.href "mailto:support@serp.bot"
+                                , Attr.class "font-medium text-indigo-600 hover:text-indigo-500"
+                                ]
+                                [ text " customer support " ]
+                            , text "team." ]
+                        ]
+                    , div
+                        [ Attr.class "mt-12 lg:mt-0 lg:col-span-2"
+                        ]
+                        [ dl
+                            [ Attr.class "space-y-12"
+                            ]
+                            [ div []
+                                [ dt
+                                    [ Attr.class "text-lg leading-6 font-medium text-gray-900"
+                                    ]
+                                    [ text "Why is it called Serpbot?" ]
+                                , dd
+                                    [ Attr.class "mt-2 text-base text-gray-500"
+                                    ]
+                                    [ text "Serp stands for Serp Engine Rank Page. It is a common term used by the SEO crowd. It also perfectly explains the purpose of this application." ]
+                                ]
+                            , div []
+                                [ dt
+                                [ Attr.class "text-lg leading-6 font-medium text-gray-900"
+                                ]
+                                [ text "Is it really free?" ]
+                                , dd
+                                    [ Attr.class "mt-2 text-base text-gray-500"
+                                    ]
+                                    [ text "Yes, at least for the time being. Running a website cost money, especially if a lot of people use it. I am relying on donations to keep it up, so if you're feeling generous, please donate." ]
+                                    ]
+                            , div []
+                                [ dt
+                                [ Attr.class "text-lg leading-6 font-medium text-gray-900"
+                                ]
+                                [ text "Are there any limits to the free usage?" ]
+                                , dd
+                                    [ Attr.class "mt-2 text-base text-gray-500"
+                                    ]
+                                    [ text "Yes, there are limits. Each user is limited to 5 websites. Additionally, only the top 100 results are checked. Anything more than that will show 0." ]
+                                    ]
+                            , div []
+                                [ dt
+                                [ Attr.class "text-lg leading-6 font-medium text-gray-900"
+                                ]
+                                [ text "Can I self-host and remove the limits?" ]
+                                , dd
+                                    [ Attr.class "mt-2 text-base text-gray-500"
+                                    ]
+                                    [ text "Absolutely! The entire source code is currently available on github, so you can remove limits or make any other change that you would like. I will be publishing a guide shortly on how to proceed." ]
+                                    ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ,
         div
             [ Attr.class "bg-gray-50"
             ]
