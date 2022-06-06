@@ -42,6 +42,7 @@ viewAlertSuccess message =
             ]
         ]
 
+
 viewAlertFailure: String -> Html msg
 viewAlertFailure message =
     div

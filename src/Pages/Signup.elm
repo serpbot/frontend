@@ -8,7 +8,7 @@ import Common.Response exposing (Response, responseDecoder)
 import Common.Spinner exposing (viewSpinnerText)
 import Environment exposing (EnvironmentVar)
 import Gen.Route
-import Html exposing (Html, a, button, dd, div, dl, dt, form, h1, h2, img, input, label, main_, p, span, text)
+import Html exposing (Html, a, button, dd, div, dl, dt, form, h1, h2, h3, img, input, label, main_, p, span, text)
 import Html.Attributes as Attr exposing (class)
 import Html.Events exposing (onClick, onInput)
 import Http
@@ -35,6 +35,7 @@ page shared req =
 type Status
     = Failure String
     | Success String
+    | Warning
     | Loading
     | None
 
@@ -51,6 +52,8 @@ type Msg
     | ChangeEmail String
     | ChangePassword String
     | ClickedSignup
+    | ClickedProceed
+    | ClickedCancel
     | ReceivedCaptcha String
     | FormSentResp (Result Http.Error Response)
 
@@ -108,7 +111,8 @@ update shared msg model =
             else if model.email == "" then
                 ( { model | status = Failure "Email cannot be empty" }, Cmd.none)
             else
-                ( { model | status = Loading } , Shared.getCaptchaResponse)
+                ( { model | status = Warning }, Cmd.none)
+                --( { model | status = Loading } , Shared.getCaptchaResponse)
 
         ReceivedCaptcha captcha ->
             if captcha == "" then
@@ -129,6 +133,13 @@ update shared msg model =
                                 ({ model | status = Failure "Unable to process request, please try again later" }, Shared.resetCaptcha ())
                 Err _ ->
                     ({ model | status = Failure "Unable to process request, please try again later" }, Shared.resetCaptcha ())
+
+        ClickedProceed ->
+            ( { model | status = Loading } , Shared.getCaptchaResponse)
+
+        ClickedCancel ->
+            ( { model | status = None } , Cmd.none)
+
 
 
 -- Listen for shared model changes
@@ -180,6 +191,8 @@ viewMain model =
                         [ case model.status of
                               Failure error ->
                                   viewAlertFailure error
+                              Warning ->
+                                  viewWarning
                               Success info ->
                                   viewAlertSuccess info
                               _ ->
@@ -258,6 +271,91 @@ viewMain model =
                                     _ -> [ text "Sign up" ]
                                 )
                             ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+
+viewWarning: Html Msg
+viewWarning =
+    div
+        [ Attr.class "relative z-10"
+        , Attr.attribute "aria-labelledby" "modal-title"
+        , Attr.attribute "role" "dialog"
+        , Attr.attribute "aria-modal" "true"
+        ]
+        [
+        div
+            [ Attr.class "fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+            ]
+            []
+        , div
+            [ Attr.class "fixed z-10 inset-0 overflow-y-auto"
+            ]
+            [ div
+                [ Attr.class "flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0"
+                ]
+                [
+                div
+                    [ Attr.class "relative bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full sm:p-6"
+                    ]
+                    [ div
+                        [ Attr.class "sm:flex sm:items-start"
+                        ]
+                        [ div
+                            [ Attr.class "mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
+                            ]
+                            [                             {- Heroicon name: outline/exclamation -}
+                            svg
+                                [ SvgAttr.class "h-6 w-6 text-red-600"
+                                , SvgAttr.fill "none"
+                                , SvgAttr.viewBox "0 0 24 24"
+                                , SvgAttr.strokeWidth "2"
+                                , SvgAttr.stroke "currentColor"
+                                , Attr.attribute "aria-hidden" "true"
+                                ]
+                                [ path
+                                    [ SvgAttr.strokeLinecap "round"
+                                    , SvgAttr.strokeLinejoin "round"
+                                    , SvgAttr.d "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                                    ]
+                                    []
+                                ]
+                            ]
+                        , div
+                            [ Attr.class "mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left"
+                            ]
+                            [ h3
+                                [ Attr.class "text-lg leading-6 font-medium text-gray-900"
+                                , Attr.id "modal-title"
+                                ]
+                                [ text "Disclaimer" ]
+                            , div
+                                [ Attr.class "mt-2"
+                                ]
+                                [ p
+                                    [ Attr.class "text-sm text-gray-500"
+                                    ]
+                                    [ text "The services are provided AS-IS and AS-AVAILABLE. We make no guarantee as to the AVAILABILITY or RELIABILITY of the services. Use at your own risk." ]
+                                ]
+                            ]
+                        ]
+                    , div
+                        [ Attr.class "mt-5 sm:mt-4 sm:flex sm:flex-row-reverse"
+                        ]
+                        [ button
+                            [ Attr.type_ "button"
+                            , Attr.class "w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                            , onClick ClickedProceed
+                            ]
+                            [ text "Proceed" ]
+                        , button
+                            [ Attr.type_ "button"
+                            , Attr.class "mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
+                            , onClick ClickedCancel
+                            ]
+                            [ text "Cancel" ]
                         ]
                     ]
                 ]
