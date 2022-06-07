@@ -49,6 +49,7 @@ type Msg
     | ClickedLogin
     | ReceivedCaptcha String
     | FormSentResp (Result Http.Error Response)
+    | NoOp
 
 init: Request -> Storage -> (Model, Cmd Msg)
 init req storage =
@@ -111,15 +112,18 @@ update shared msg model =
                     if resp.status == "failure" then
                         ( { model | username = "", password = "", recaptcha = "", status = Failure resp.error }, Shared.resetCaptcha ())
                     else
-                        case resp.data.token of
-                            Just token ->
+                        case resp.data.user of
+                            Just u ->
                                 ( model
-                                , Storage.signIn (User token) shared.storage
+                                , Storage.signIn (User u.token u.username u.notifications) shared.storage
                                 )
                             Nothing ->
                                 ({ model | status = Failure "Unable to process request, please try again later" }, Shared.resetCaptcha ())
                 Err _ ->
                     ({ model | status = Failure "Unable to process request, please try again later" }, Shared.resetCaptcha ())
+
+        _ ->
+            (model, Cmd.none)
 
 
 -- Listen for shared model changes
@@ -138,7 +142,7 @@ view shared model =
     , body = [ div
                 [ class "flex flex-col h-screen justify-between bg-gray-50"
                 ]
-                [ viewHeader shared.storage.user
+                [ viewHeader shared.storage.user NoOp False
                 , viewMain model
                 , viewFooter shared.year
                 ]

@@ -49,7 +49,7 @@ view shared _ =
     , body = [ div
                 [ class "flex flex-col h-screen justify-between bg-gray-50"
                 ]
-                [ viewHeader shared.storage.user
+                [ viewHeader shared.storage.user NoOp False
                 , viewMain
                 , viewFooter shared.year
                 ]

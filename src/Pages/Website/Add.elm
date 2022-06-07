@@ -17,8 +17,6 @@ import Page
 import Shared
 import Request exposing (Request)
 import Storage exposing (Storage)
-import Svg exposing (path, svg)
-import Svg.Attributes as SvgAttr
 import View exposing (View)
 
 page : Shared.Model -> Request -> Page.With Model Msg
@@ -44,6 +42,7 @@ type alias Model =
     , keyword: String
     , keywords: List(String)
     , status: Status
+    , extended: Bool
     }
 
 type Msg
@@ -53,10 +52,11 @@ type Msg
     | ClickedRemoveKeyword String
     | ClickedAddWebsite
     | FormSentResp (Result Http.Error Response)
+    | ClickedAccount
 
 init: (Model, Cmd Msg)
 init =
-    (Model "" "" [] None, Cmd.none)
+    (Model "" "" [] None False, Cmd.none)
 
 
 -- Update
@@ -132,6 +132,12 @@ update shared user req msg model =
                 Err err ->
                     errorHandler model shared.storage err
 
+        ClickedAccount ->
+            if model.extended then
+                ({ model | extended = False }, Cmd.none)
+            else
+                ({ model | extended = True }, Cmd.none)
+
 
 -- View
 
@@ -142,7 +148,7 @@ view shared user model =
     , body = [ div
                 [ class "flex flex-col h-screen justify-between bg-gray-50"
                 ]
-                [ viewHeader (Just user)
+                [ viewHeader (Just user) ClickedAccount model.extended
                 , viewMain model
                 , viewFooter shared.year
                 ]

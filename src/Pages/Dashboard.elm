@@ -39,15 +39,17 @@ type Status
 type alias Model =
     { websites: List(Maybe Website)
     , status: Status
+    , extended: Bool
     }
 
 type Msg
     = FormSentResp (Result Http.Error Response)
+    | ClickedAccount
 
 init: Shared.Model -> User -> (Model, Cmd Msg)
 init shared user =
     let
-        model = Model [] Loading
+        model = Model [] Loading False
     in
     getAllWebsites shared.env user model
 
@@ -97,6 +99,13 @@ update shared user msg model =
                 Err err ->
                     errorHandler model shared.storage err
 
+        ClickedAccount ->
+            if model.extended then
+                ({ model | extended = False }, Cmd.none)
+            else
+                ({ model | extended = True }, Cmd.none)
+
+
 
 -- View
 
@@ -107,7 +116,7 @@ view shared user model =
     , body = [ div
                 [ class "flex flex-col h-screen justify-between bg-gray-50"
                 ]
-                [ viewHeader (Just user)
+                [ viewHeader (Just user) ClickedAccount model.extended
                 , viewMain model
                 , viewFooter shared.year
                 ]
@@ -132,7 +141,7 @@ viewMain model =
                         [ text "My sites" ]
                     , a
                         [ Attr.href (Route.toHref Route.Website__Add)
-                        , Attr.class "relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        , Attr.class "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         ]
                         [ text "+ Add a website" ]
                     ]

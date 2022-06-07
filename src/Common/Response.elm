@@ -10,7 +10,7 @@ type alias Response =
     }
 
 type alias Data =
-    { token: Maybe String
+    { user: Maybe User
     , info: Maybe String
     , website: Maybe Website
     , websites: List(Maybe Website)
@@ -36,6 +36,8 @@ type alias Keyword =
 
 type alias User =
     { token: String
+    , username: String
+    , notifications: Bool
     }
 
 responseDecoder: Decoder Response
@@ -48,11 +50,18 @@ responseDecoder =
 dataDecoder: Decoder Data
 dataDecoder =
     Decode.succeed Data
-        |> optional "token" (Decode.map Just string) Nothing
+        |> optional "user" (Decode.map Just userDecoder) Nothing
         |> optional "info" (Decode.map Just string) Nothing
         |> optional "website" (Decode.map Just websiteDecoder) Nothing
         |> optional "websites" (Decode.list (Decode.map Just websiteDecoder)) []
         |> optional "trend" (Decode.map Just trendDecoder) Nothing
+
+userDecoder: Decoder User
+userDecoder =
+    Decode.succeed User
+        |> required "token" string
+        |> required "username" string
+        |> required "notifications" bool
 
 websiteDecoder: Decoder Website
 websiteDecoder =
@@ -60,7 +69,7 @@ websiteDecoder =
         |> required "domain" string
         |> required "id" string
         |> required "keywords" (Decode.list string)
-        |> required "num_keywords" int
+        |> required "numKeywords" int
 
 trendDecoder: Decoder Trend
 trendDecoder =

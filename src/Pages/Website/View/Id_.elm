@@ -35,16 +35,18 @@ type Status
 
 type alias Model =
     { status: Status
+    , extended: Bool
     }
 
 type Msg
     = GoogleFormSentResp (Result Http.Error Response)
     | BingFormSentResp (Result Http.Error Response)
+    | ClickedAccount
 
 init: Request.With Params -> Shared.Model -> User -> (Model, Cmd Msg)
 init req shared user=
     let
-        model = Model Loading
+        model = Model Loading False
     in
     ( model
     , Cmd.batch [ getTrendGoogle req.params.id shared.env user
@@ -122,6 +124,13 @@ update shared msg model =
                 Err err ->
                     errorHandler model shared.storage err
 
+        ClickedAccount ->
+            if model.extended then
+                ({ model | extended = False }, Cmd.none)
+            else
+                ({ model | extended = True }, Cmd.none)
+
+
 
 
 
@@ -133,7 +142,7 @@ view shared user model =
     , body = [ div
                 [ class "bg-gray-50"
                 ]
-                [ viewHeader (Just user)
+                [ viewHeader (Just user) ClickedAccount model.extended
                 , viewMain model
                 , viewFooter shared.year
                 ]

@@ -43,6 +43,7 @@ type alias Model =
     , keywords: List(String)
     , keyword: String
     , status: Status
+    , extended: Bool
     }
 
 type Msg
@@ -54,11 +55,12 @@ type Msg
     | UpdateFormSentResp (Result Http.Error Response)
     | InitialFormSentResp (Result Http.Error Response)
     | DeleteFormSentResp (Result Http.Error Response)
+    | ClickedAccount
 
 init: Request.With Params -> Shared.Model -> User -> (Model, Cmd Msg)
 init req shared user =
     let
-        model = Model "" [] "" Loading
+        model = Model "" [] "" Loading False
     in
     (getWebsite req.params.id shared.env user model)
 
@@ -186,6 +188,13 @@ update req user shared msg model =
                 Err err ->
                     errorHandler model shared.storage err
 
+        ClickedAccount ->
+            if model.extended then
+                ({ model | extended = False }, Cmd.none)
+            else
+                ({ model | extended = True }, Cmd.none)
+
+
 -- View
 
 
@@ -195,7 +204,7 @@ view shared user model =
     , body = [ div
                 [ class "flex flex-col h-screen justify-between bg-gray-50"
                 ]
-                [ viewHeader (Just user)
+                [ viewHeader (Just user) ClickedAccount model.extended
                 , viewMain model
                 , viewFooter shared.year
                 ]

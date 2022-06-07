@@ -56,6 +56,7 @@ type Msg
     | ClickedCancel
     | ReceivedCaptcha String
     | FormSentResp (Result Http.Error Response)
+    | NoOp
 
 
 init: Storage -> Request -> (Model, Cmd Msg)
@@ -140,6 +141,9 @@ update shared msg model =
         ClickedCancel ->
             ( { model | status = None } , Cmd.none)
 
+        _ ->
+            (model, Cmd.none)
+
 
 
 -- Listen for shared model changes
@@ -158,7 +162,7 @@ view shared model =
     , body = [ div
                 [ class "flex flex-col h-screen justify-between bg-gray-50"
                 ]
-                [ viewHeader shared.storage.user
+                [ viewHeader shared.storage.user NoOp False
                 , viewMain model
                 , viewFooter shared.year
                 ]
