@@ -1,15 +1,21 @@
 module Pages.Settings exposing (Model, Msg, page)
 
 import Common.Alert exposing (viewAlertFailure, viewAlertSuccess)
+import Common.CustomHttp as CustomHttp
 import Common.Footer exposing (viewFooter)
 import Common.Header exposing (viewHeader)
+import Common.Response exposing (Response, responseDecoder)
 import Domain.User exposing (User)
-import Html exposing (Html, button, div, h2, input, label, main_, p, span, text)
+import Environment exposing (EnvironmentVar)
+import Html exposing (Html, br, button, div, h2, input, label, main_, p, span, text)
 import Html.Attributes as Attr exposing (class)
 import Html.Events exposing (onClick)
+import Http
+import Json.Encode as Encode
 import Page
 import Shared
 import Request exposing (Request)
+import Storage exposing (Storage, changeNotifications)
 import View exposing (View)
 
 page : Shared.Model -> Request -> Page.With Model Msg
@@ -17,7 +23,7 @@ page shared _ =
     Page.protected.element <|
         \user ->
             { init = init user
-            , update = update
+            , update = update shared user
             , view = view shared
             , subscriptions = \_ -> Sub.none
             }
@@ -39,6 +45,7 @@ type Msg
     = ClickedSave
     | ClickedToggle
     | ClickedAccount
+    | FormSentResp (Result Http.Error Response)
 
 init: User -> (Model, Cmd Msg)
 init user =
@@ -47,11 +54,31 @@ init user =
 
 -- Update
 
-update: Msg -> Model -> (Model, Cmd Msg)
-update msg model =
+updateSettings: EnvironmentVar -> User -> Model -> (Model, Cmd Msg)
+updateSettings env user model =
+    ( model
+    , Http.request
+        { url = env.serverUrl ++ "/user"
+        , method = "PUT"
+        , headers = [ Http.header "Authorization" ("Bearer " ++ user.token) ]
+        , body = Http.jsonBody (encodeModel model)
+        , expect = CustomHttp.expectJson FormSentResp responseDecoder
+        , timeout = Nothing
+        , tracker = Nothing
+        }
+    )
+
+encodeModel: Model -> Encode.Value
+encodeModel model =
+    Encode.object
+        [ ("notifications", Encode.bool model.toggled)
+        ]
+
+update: Shared.Model -> User -> Msg -> Model -> (Model, Cmd Msg)
+update shared user msg model =
     case msg of
         ClickedSave ->
-            (model, Cmd.none)
+            updateSettings shared.env user model
 
 
         ClickedAccount ->
@@ -65,6 +92,18 @@ update msg model =
                 ({model | toggled = False}, Cmd.none)
             else
                 ({model | toggled = True}, Cmd.none)
+
+        FormSentResp result ->
+            case result of
+                Ok resp ->
+                    if resp.status == "failure" then
+                        ( { model | status = Failure resp.error }, Cmd.none)
+                    else
+                        ( { model | status = Success "Successfully updated settings"}
+                        , changeNotifications model.toggled shared.storage
+                        )
+                Err _ ->
+                    ({ model | status = Failure "Unable to process request, please try again later" }, Cmd.none)
 
 
 
@@ -100,8 +139,8 @@ viewMain model =
                 [ Attr.class "text-xl font-black dark:text-gray-100"
                 ]
                 [ text "Account Settings" ]
-            ,
-            (case model.status of
+            , br [] []
+            ,(case model.status of
                 Failure error -> viewAlertFailure error
                 Success msg -> viewAlertSuccess msg
                 _ -> div [] []

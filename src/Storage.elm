@@ -7,6 +7,7 @@ port module Storage exposing
     , onChange
     , signIn
     , signOut
+    , changeNotifications
     )
 
 import Domain.User exposing (User, userDecoder, userEncoder)
@@ -66,6 +67,23 @@ signOut storage =
         |> save
 
 
+-- Update storage
+
+changeNotifications: Bool -> Storage -> Cmd msg
+changeNotifications notifications storage =
+    case storage.user of
+        Just user ->
+            let
+                oldUser = user
+                newUser =
+                    { oldUser | notifications = notifications }
+            in { storage | user = Just newUser }
+                |> storageToJson
+                |> save
+
+        Nothing ->
+            (Cmd.none
+            )
 -- Init
 
 init: Storage
