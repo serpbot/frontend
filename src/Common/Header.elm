@@ -98,8 +98,9 @@ viewHeader user msg extended =
                                             [ Attr.attribute "data-dropdown-trigger" ""
                                             , Attr.class "flex items-center justify-end p-1 m-1 rounded cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-900 dark:text-gray-100"
                                             ]
-                                            [ span
-                                                [ Attr.class "pl-2 mr-2 truncate"
+                                            [ button
+                                                [ Attr.class "pl-2 mr-2 truncate font-bold"
+
                                                 , onClick msg
                                                 ]
                                                 [ text u.username ]
@@ -111,6 +112,7 @@ viewHeader user msg extended =
                                                 , SvgAttr.viewBox "0 0 512 640"
                                                 , SvgAttr.enableBackground "new 0 0 512 512"
                                                 , SvgAttr.xmlSpace "preserve"
+                                                , onClick msg
                                                 ]
                                                 [ Svg.g []
                                                     [ Svg.circle

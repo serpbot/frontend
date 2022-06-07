@@ -2,7 +2,7 @@ module Pages.Privacy exposing (Model, Msg, page)
 
 import Common.Footer exposing (viewFooter)
 import Common.Header exposing (viewHeader)
-import Html exposing (Html, a, blockquote, br, div, figcaption, figure, h1, h2, img, li, p, span, strong, text, ul)
+import Html exposing (Html, br, div, h1, h2, li, p, span, text, ul)
 import Html.Attributes as Attr exposing (class)
 import Page
 import Shared
@@ -23,32 +23,38 @@ page shared _ =
 -- Init
 
 type alias Model =
-    {}
+    { extended: Bool
+    }
 
 type Msg
-    = NoOp
+    = ClickedAccount
 
 init: (Model, Cmd Msg)
 init =
-    (Model, Cmd.none)
+    (Model False, Cmd.none)
 
 
 -- Update
 
 update: Msg -> Model -> (Model, Cmd Msg)
-update _ model =
-    (model, Cmd.none)
+update msg model =
+    case msg of
+        ClickedAccount ->
+            if model.extended then
+                ({ model | extended = False }, Cmd.none)
+            else
+                ({ model | extended = True }, Cmd.none)
 
 -- View
 
 
 view : Shared.Model -> Model -> View Msg
-view shared _ =
+view shared model =
     { title = "Serpbot | Privacy"
     , body = [ div
                 [ class "bg-gray-50"
                 ]
-                [ viewHeader shared.storage.user NoOp False
+                [ viewHeader shared.storage.user ClickedAccount model.extended
                 , viewMain
                 , viewFooter shared.year
                 ]

@@ -3,13 +3,11 @@ module Pages.NotFound exposing (Model, Msg, page)
 import Common.Footer exposing (viewFooter)
 import Common.Header exposing (viewHeader)
 import Gen.Route as Route
-import Html exposing (Html, a, br, div, h1, h2, main_, p, span, text)
+import Html exposing (Html, a, div, h1, main_, p, text)
 import Html.Attributes as Attr exposing (class)
 import Page
 import Shared
 import Request exposing (Request)
-import Svg exposing (svg)
-import Svg.Attributes as SvgAttr
 import View exposing (View)
 
 page : Shared.Model -> Request -> Page.With Model Msg
@@ -24,32 +22,38 @@ page shared _ =
 -- Init
 
 type alias Model =
-    {}
+    { extended: Bool
+    }
 
 type Msg
-    = NoOp
+    = ClickedAccount
 
 init: (Model, Cmd Msg)
 init =
-    (Model, Cmd.none)
+    (Model False, Cmd.none)
 
 
 -- Update
 
 update: Msg -> Model -> (Model, Cmd Msg)
-update _ model =
-    (model, Cmd.none)
+update msg model =
+    case msg of
+        ClickedAccount ->
+            if model.extended then
+                ({ model | extended = False }, Cmd.none)
+            else
+                ({ model | extended = True }, Cmd.none)
 
 -- View
 
 
 view : Shared.Model -> Model -> View Msg
-view shared _ =
+view shared model =
     { title = "Serpbot | Not Found"
     , body = [ div
                 [ class "flex flex-col h-screen justify-between bg-gray-50"
                 ]
-                [ viewHeader shared.storage.user NoOp False
+                [ viewHeader shared.storage.user ClickedAccount model.extended
                 , viewMain
                 , viewFooter shared.year
                 ]
