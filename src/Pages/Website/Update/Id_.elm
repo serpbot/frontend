@@ -158,7 +158,7 @@ update req user shared msg model =
             case result of
                 Ok resp ->
                     if resp.status == "failure" then
-                        ( { model | domain = "", keywords = [], keyword = "", status = Failure resp.error }, Cmd.none)
+                        ( { model | status = Failure resp.error }, Cmd.none)
                     else
                         (model, Request.replaceRoute Gen.Route.Dashboard req)
                 Err err ->
