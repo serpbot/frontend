@@ -7,7 +7,7 @@ import Common.Response exposing (Response, Website, responseDecoder)
 import Domain.User exposing (User)
 import Environment exposing (EnvironmentVar)
 import Gen.Route as Route
-import Html exposing (Html, a, b, br, dd, div, dl, dt, h1, h2, h3, img, li, main_, p, span, text, ul)
+import Html exposing (Html, a, b, br, button, dd, div, dl, dt, h1, h2, h3, img, li, main_, p, span, text, ul)
 import Html.Attributes as Attr exposing (class)
 import Http
 import Page

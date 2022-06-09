@@ -310,7 +310,7 @@ viewWarning =
                         [ div
                             [ Attr.class "mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
                             ]
-                            [                             {- Heroicon name: outline/exclamation -}
+                            [
                             svg
                                 [ SvgAttr.class "h-6 w-6 text-red-600"
                                 , SvgAttr.fill "none"
@@ -341,7 +341,7 @@ viewWarning =
                                 [ p
                                     [ Attr.class "text-sm text-gray-500"
                                     ]
-                                    [ text "The services are provided AS-IS and AS-AVAILABLE. We make no guarantee as to the AVAILABILITY or RELIABILITY of the services. Use at your own risk." ]
+                                    [ text "The services are provided AS-IS and AS-AVAILABLE. We make no guarantee as to the AVAILABILITY or RELIABILITY of the services." ]
                                 ]
                             ]
                         ]
