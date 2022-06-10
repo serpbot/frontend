@@ -202,7 +202,7 @@ view : Shared.Model -> User -> Model -> View Msg
 view shared user model =
     { title = "Update Website | Serpbot"
     , body = [ div
-                [ class "flex flex-col h-screen justify-between bg-gray-50"
+                [ class "bg-gray-50 h-screen"
                 ]
                 [ viewHeader (Just user) ClickedAccount model.extended
                 , viewMain model
@@ -213,7 +213,7 @@ view shared user model =
 
 viewMain: Model -> Html Msg
 viewMain model =
-    main_ [ Attr.class "mb-auto h-10" ]
+    main_ []
         [ div
             [ Attr.class "max-w-lg w-full mx-auto bg-white dark:bg-gray-800 shadow-lg rounded px-8 pt-6 pb-8 mb-4 mt-8"
             ]

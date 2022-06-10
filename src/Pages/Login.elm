@@ -140,7 +140,7 @@ view : Shared.Model -> Model -> View Msg
 view shared model =
     { title = "Login | Serpbot"
     , body = [ div
-                [ class "flex flex-col h-screen justify-between bg-gray-50"
+                [ class "bg-gray-50 h-screen"
                 ]
                 [ viewHeader shared.storage.user NoOp False
                 , viewMain model
@@ -151,9 +151,9 @@ view shared model =
 
 viewMain: Model -> Html Msg
 viewMain model =
-    main_ [ Attr.class "mb-auto h-10" ]
+    main_ [ ]
         [ div
-            [ Attr.class "bg-gray-50 min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8"
+            [ Attr.class "bg-gray-50 relative"
             ]
             [ div
                 [ Attr.class "sm:mx-auto sm:w-full sm:max-w-md"
