@@ -51,7 +51,7 @@ update msg model =
 
 view : Shared.Model -> Model -> View Msg
 view shared model =
-    { title = "Serpbot | Home"
+    { title = "Free SERP check - google and bing ranking check | Serpbot"
     , body = [ div
                 [ class "bg-gray-50"
                 ]

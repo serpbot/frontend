@@ -49,7 +49,7 @@ update msg model =
 
 view : Shared.Model -> Model -> View Msg
 view shared model =
-    { title = "Serpbot | Not Found"
+    { title = "Not Found | Serpbot"
     , body = [ div
                 [ class "flex flex-col h-screen justify-between bg-gray-50"
                 ]

@@ -242,7 +242,7 @@ update req shared user msg model =
 
 view : Shared.Model -> Request.With Params -> User -> Model -> View Msg
 view shared req user model =
-    { title = "Serpbot | View Website"
+    { title = "View Trends | Serpbot"
     , body = [ div
                 [ class "bg-gray-50"
                 ]

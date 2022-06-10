@@ -50,7 +50,7 @@ update msg model =
 
 view : Shared.Model -> Model -> View Msg
 view shared model =
-    { title = "Serpbot | Privacy"
+    { title = "Privacy Policy | Serpbot"
     , body = [ div
                 [ class "bg-gray-50"
                 ]

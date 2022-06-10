@@ -112,7 +112,7 @@ update shared user msg model =
 
 view : Shared.Model -> User -> Model -> View Msg
 view shared user model =
-    { title = "Serpbot | Dashboard"
+    { title = "Dashboard | Serpbot"
     , body = [ div
                 [ class "flex flex-col h-screen justify-between bg-gray-50"
                 ]

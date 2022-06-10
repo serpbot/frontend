@@ -2,4 +2,5 @@
 template
 elm-stuff
 .elm-spa
-public/dist/elm.js
+public/js/elm.js
+dist

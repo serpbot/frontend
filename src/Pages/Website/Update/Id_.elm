@@ -200,7 +200,7 @@ update req user shared msg model =
 
 view : Shared.Model -> User -> Model -> View Msg
 view shared user model =
-    { title = "Serpbot | Update Website"
+    { title = "Update Website | Serpbot"
     , body = [ div
                 [ class "flex flex-col h-screen justify-between bg-gray-50"
                 ]

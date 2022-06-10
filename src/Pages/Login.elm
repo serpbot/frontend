@@ -138,7 +138,7 @@ subscriptions _ =
 
 view : Shared.Model -> Model -> View Msg
 view shared model =
-    { title = "Serpbot | Login"
+    { title = "Login | Serpbot"
     , body = [ div
                 [ class "flex flex-col h-screen justify-between bg-gray-50"
                 ]
