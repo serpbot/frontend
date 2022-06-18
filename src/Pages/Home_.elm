@@ -112,7 +112,7 @@ viewMain =
                             , p
                                 [ Attr.class "mt-6 max-w-lg mx-auto text-center text-xl text-indigo-200 sm:max-w-3xl"
                                 ]
-                                [ text "We make it easy and affordable to monitor your website rank on both Google and Bing through our automated system" ]
+                                [ text "We make it easy and free to monitor your website rank on both Google and Bing through our automated system" ]
                             , div
                                 [ Attr.class "mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center"
                                 ]
