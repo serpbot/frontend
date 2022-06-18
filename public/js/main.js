@@ -39,10 +39,18 @@ app.ports.save.subscribe(storage => {
 function generateCanvas(engine, trend) {
     datasets = [];
     trend.keywords.forEach(function (keyword) {
+        data_list = [];
+        keyword.data.forEach(function (data) {
+           if (data === -1)
+               data_list.push(NaN);
+           else
+               data_list.push(data);
+        });
         color = dynamicColors();
         datasets.push({
             label: keyword.label,
-            data: keyword.data,
+            data: data_list,
+            spanGaps: true,
             fill: false,
             cubicInterpolationMode: 'monotone',
             tension: 0.4,
