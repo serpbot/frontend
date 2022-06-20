@@ -165,7 +165,7 @@ viewMain: Model -> Html Msg
 viewMain model =
     main_ [ ]
         [ div
-            [ Attr.class "max-w-lg w-full mx-auto bg-white dark:bg-gray-800 shadow-lg rounded px-8 pt-6 pb-8 mb-4 mt-8"
+            [ Attr.class "max-w-lg w-full mx-auto bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4 mt-8"
             ]
             [ input
                 [ Attr.name "_csrf_token"
@@ -174,7 +174,7 @@ viewMain model =
                 ]
                 []
             , h2
-                [ Attr.class "text-xl font-black dark:text-gray-100"
+                [ Attr.class "text-xl font-black"
                 ]
                 [ text "Add a website to monitor" ]
             ,
@@ -187,23 +187,23 @@ viewMain model =
                 [ Attr.class "my-6"
                 ]
                 [ label
-                    [ Attr.class "block text-sm font-medium text-gray-700 dark:text-gray-300"
+                    [ Attr.class "block text-sm font-medium text-gray-700"
                     , Attr.for "site_domain"
                     ]
                     [ text "Domain" ]
                 , p
-                    [ Attr.class "text-gray-500 dark:text-gray-400 text-xs mt-1"
+                    [ Attr.class "text-gray-500 text-xs mt-1"
                     ]
                     [ text "Just the naked domain or subdomain without 'www'" ]
                 , div
                     [ Attr.class "mt-2 flex rounded-md shadow-sm"
                     ]
                     [ span
-                        [ Attr.class "inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 dark:border-gray-500 bg-gray-50 dark:bg-gray-850 text-gray-500 dark:text-gray-400 sm:text-sm"
+                        [ Attr.class "inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300"
                         ]
                         [ text "https://" ]
                     , input
-                        [ Attr.class "focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-800 flex-1 block w-full px-3 py-2 rounded-none rounded-r-md sm:text-sm border-gray-300 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-300"
+                        [ Attr.class "focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full px-3 py-2 rounded-none rounded-r-md sm:text-sm border-gray-300"
                         , Attr.id "site_domain"
                         , Attr.name "site[domain]"
                         , Attr.placeholder "example.com"

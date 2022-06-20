@@ -81,7 +81,7 @@ viewHeader user clickedAccount extended clickedMobile mobile =
                                     [ Attr.class "hidden mr-6 sm:block"
                                     ]
                                     [ a
-                                        [ Attr.class "font-bold rounded m-1 p-1 hover:bg-gray-200 dark:hover:bg-gray-900 dark:text-gray-100"
+                                        [ Attr.class "font-bold rounded m-1 p-1 hover:bg-gray-200"
                                         , Attr.href "https://docs.serp.bot"
                                         , Attr.rel "noreferrer"
                                         , Attr.style "line-height" "40px"
@@ -97,7 +97,7 @@ viewHeader user clickedAccount extended clickedMobile mobile =
                                         ]
                                         [ div
                                             [ Attr.attribute "data-dropdown-trigger" ""
-                                            , Attr.class "flex items-center justify-end p-1 m-1 rounded cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-900 dark:text-gray-100"
+                                            , Attr.class "flex items-center justify-end p-1 m-1 rounded cursor-pointer hover:bg-gray-200"
                                             ]
                                             [ button
                                                 [ Attr.class "pl-2 mr-2 truncate font-bold"
@@ -142,18 +142,18 @@ viewHeader user clickedAccount extended clickedMobile mobile =
                                             , Attr.style "right" "0px"
                                             , Attr.style "width" "185px"
                                             , (if extended then
-                                                Attr.class "absolute right-0 bg-white border border-gray-300 rounded shadow-md dropdown-content dark:bg-gray-800 dark:border-gray-500"
+                                                Attr.class "absolute right-0 bg-white border border-gray-300 rounded shadow-md dropdown-content"
                                               else
-                                                Attr.class "absolute right-0 bg-white border border-gray-300 rounded shadow-md dropdown-content dark:bg-gray-800 dark:border-gray-500 hidden"
+                                                Attr.class "absolute right-0 bg-white border border-gray-300 rounded shadow-md dropdown-content hidden"
                                             )
                                             ]
                                             [ a
-                                                [ Attr.class "block py-2 px-2 border-b border-gray-300 dark:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-gray-100"
+                                                [ Attr.class "block py-2 px-2 border-b border-gray-300 hover:bg-gray-100"
                                                 , Attr.href (Route.toHref Route.Settings)
                                                 ]
                                                 [ text "Settings" ]
                                             , a
-                                                [ Attr.class "block py-2 px-2 hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-gray-100"
+                                                [ Attr.class "block py-2 px-2 hover:bg-gray-100"
                                                 , Attr.href (Route.toHref Route.Logout)
                                                 ]
                                                 [ text "Log out" ]

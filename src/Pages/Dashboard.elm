@@ -142,10 +142,10 @@ viewMain model =
                             [ Attr.attribute "lass" "container pt-6"
                             ]
                             [ div
-                                [ Attr.class "mt-6 pb-5 border-b border-gray-200 dark:border-gray-500 flex items-center justify-between"
+                                [ Attr.class "mt-6 pb-5 border-b border-gray-200 flex items-center justify-between"
                                 ]
                                 [ h2
-                                    [ Attr.class "text-2xl font-bold leading-7 text-gray-900 dark:text-gray-100 sm:text-3xl sm:leading-9 sm:truncate flex-shrink-0"
+                                    [ Attr.class "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate flex-shrink-0"
                                     ]
                                     [ text "My sites" ]
                                 , a
@@ -181,7 +181,7 @@ viewWebsite maybeWebsite =
                     [ Attr.href (Route.toHref (Route.Website__View__Id_ {id=website.id}))
                     ]
                     [ li
-                        [ Attr.class "col-span-1 bg-white dark:bg-gray-800 rounded-lg shadow p-4 group-hover:shadow-lg cursor-pointer"
+                        [ Attr.class "col-span-1 bg-white rounded-lg shadow p-4 group-hover:shadow-lg cursor-pointer"
                         ]
                         [ div
                             [ Attr.class "w-full flex items-center justify-between space-x-4"
@@ -190,7 +190,7 @@ viewWebsite maybeWebsite =
                                 [ Attr.class "pl-8 flex-1 -mt-px w-full"
                                 ]
                                 [ h3
-                                    [ Attr.class "text-gray-900 font-medium text-lg truncate dark:text-gray-100"
+                                    [ Attr.class "text-gray-900 font-medium text-lg truncate"
                                     , Attr.style "width" "calc(100% - 4rem)"
                                     ]
                                     [ text website.domain ]
@@ -200,10 +200,10 @@ viewWebsite maybeWebsite =
                             [ Attr.class "pl-8 mt-2 flex items-center justify-between"
                             ]
                             [ span
-                                [ Attr.class "text-gray-600 dark:text-gray-400 text-sm truncate"
+                                [ Attr.class "text-gray-600 text-sm truncate"
                                 ]
                                 [ span
-                                    [ Attr.class "text-gray-800 dark:text-gray-200"
+                                    [ Attr.class "text-gray-800"
                                     ]
                                     [ text "Keywords: "
                                     , b [] [ text (String.fromInt website.numKeywords) ]
@@ -217,7 +217,7 @@ viewWebsite maybeWebsite =
                     , Attr.href (Route.toHref (Route.Website__Update__Id_ {id=website.id}))
                     ]
                     [ svg
-                        [ SvgAttr.class "w-5 h-5 text-gray-600 dark:text-gray-400 transition hover:text-gray-900 dark:hover:text-gray-100"
+                        [ SvgAttr.class "w-5 h-5 text-gray-600 transition hover:text-gray-900"
                         , SvgAttr.fill "currentColor"
                         , SvgAttr.viewBox "0 0 20 20"
                         ]

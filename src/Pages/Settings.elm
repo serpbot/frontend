@@ -135,7 +135,7 @@ viewMain: Model -> Html Msg
 viewMain model =
     main_ [ Attr.class "mb-auto h-10" ]
         [ div
-            [ Attr.class "max-w-lg w-full mx-auto bg-white dark:bg-gray-800 shadow-lg rounded px-8 pt-6 pb-8 mb-4 mt-8"
+            [ Attr.class "max-w-lg w-full mx-auto bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4 mt-8"
             ]
             [ input
                 [ Attr.name "_csrf_token"
@@ -144,7 +144,7 @@ viewMain model =
                 ]
                 []
             , h2
-                [ Attr.class "text-xl font-black dark:text-gray-100"
+                [ Attr.class "text-xl font-black"
                 ]
                 [ text "Account Settings" ]
             , br [] []

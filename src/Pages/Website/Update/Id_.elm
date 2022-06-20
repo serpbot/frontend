@@ -222,7 +222,7 @@ viewMain: Model -> Html Msg
 viewMain model =
     main_ []
         [ div
-            [ Attr.class "max-w-lg w-full mx-auto bg-white dark:bg-gray-800 shadow-lg rounded px-8 pt-6 pb-8 mb-4 mt-8"
+            [ Attr.class "max-w-lg w-full mx-auto bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4 mt-8"
             ]
             [ input
                 [ Attr.name "_csrf_token"
@@ -231,7 +231,7 @@ viewMain model =
                 ]
                 []
             , h2
-                [ Attr.class "text-xl font-black dark:text-gray-100"
+                [ Attr.class "text-xl font-black "
                 ]
                 [ text "Update website details" ]
             ,
@@ -244,7 +244,7 @@ viewMain model =
                 [ Attr.class "my-6"
                 ]
                 [ label
-                    [ Attr.class "block text-sm font-medium text-gray-700 dark:text-gray-300"
+                    [ Attr.class "block text-sm font-medium text-gray-700"
                     , Attr.for "site_domain"
                     ]
                     [ text "Domain" ]

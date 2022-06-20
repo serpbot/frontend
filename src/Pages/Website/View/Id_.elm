@@ -271,10 +271,10 @@ viewMain model id =
                 [ Attr.attribute "lass" "container pt-6"
                 ]
                 [ div
-                    [ Attr.class "mt-6 pb-5 border-b border-gray-200 dark:border-gray-500 flex items-center justify-between"
+                    [ Attr.class "mt-6 pb-5 border-b border-gray-200 flex items-center justify-between"
                     ]
                     [ h2
-                        [ Attr.class "text-2xl font-bold leading-7 text-gray-900 dark:text-gray-100 sm:text-3xl sm:leading-9 sm:truncate flex-shrink-0"
+                        [ Attr.class "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate flex-shrink-0"
                         ]
                         [ text "Website Stats" ]
                     ]
@@ -323,7 +323,7 @@ viewFilter model id =
                     [ Attr.class "relative inline-block text-left mr-2 sm:mr-4"
                     ]
                     [ button
-                        [ Attr.class "inline-flex items-center md:text-lg w-full rounded-md py-2 leading-5 font-bold text-gray-700 dark:text-gray-300 focus:outline-none transition ease-in-out duration-150 hover:text-gray-500 dark:hover:text-gray-200 focus:border-blue-300 focus:ring "
+                        [ Attr.class "inline-flex items-center md:text-lg w-full rounded-md py-2 leading-5 font-bold text-gray-700 focus:outline-none transition ease-in-out duration-150 hover:text-gray-500 focus:border-blue-300 focus:ring "
                         , onClick ClickedWebsiteDropdown
                         ]
                         [ span
@@ -362,7 +362,7 @@ viewFilter model id =
                     [ Attr.class "w-20 sm:w-36 md:w-48 md:relative"
                     ]
                     [ div
-                        [ Attr.class "flex items-center justify-between rounded bg-white dark:bg-gray-800 shadow px-2 md:px-3 py-2 leading-tight cursor-pointer text-xs md:text-sm text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-900"
+                        [ Attr.class "flex items-center justify-between rounded bg-white shadow px-2 md:px-3 py-2 leading-tight cursor-pointer text-xs md:text-sm text-gray-800 hover:bg-gray-200"
                         , Attr.tabindex 0
                         , Attr.attribute "role" "button"
                         , Attr.attribute "aria-haspopup" "true"
@@ -416,16 +416,16 @@ viewDateMenu id model =
         , Attr.class "absolute w-full left-0 right-0 md:w-56 md:absolute md:top-auto md:left-auto md:right-0 mt-2 origin-top-right z-10"
         ]
         [ div
-            [ Attr.class "rounded-md shadow-lg  bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 font-medium text-gray-800 dark:text-gray-200 date-options"
+            [ Attr.class "rounded-md shadow-lg  bg-white ring-1 ring-black ring-opacity-5 font-medium text-gray-800 date-options"
             ]
             [ div
-                [ Attr.class "py-1 border-b border-gray-200 dark:border-gray-500 date-option-group"
+                [ Attr.class "py-1 border-b border-gray-200 date-option-group"
                 ]
                 [ a
                     [ (if model.filter == "7d" then
-                        Attr.class "font-bold px-4 py-2 text-sm leading-tight hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-900 dark:hover:text-gray-100 flex items-center justify-between"
+                        Attr.class "font-bold px-4 py-2 text-sm leading-tight hover:bg-gray-100 hover:text-gray-900 flex items-center justify-between"
                       else
-                        Attr.class "px-4 py-2 text-sm leading-tight hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-900 dark:hover:text-gray-100 flex items-center justify-between"
+                        Attr.class "px-4 py-2 text-sm leading-tight hover:bg-gray-100 hover:text-gray-900 flex items-center justify-between"
                     )
                     , Attr.href "#"
                     , onClick ClickedFilter7d
@@ -437,9 +437,9 @@ viewDateMenu id model =
                     ]
                 , a
                     [ (if model.filter == "30d" then
-                        Attr.class "font-bold px-4 py-2 text-sm leading-tight hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-900 dark:hover:text-gray-100 flex items-center justify-between"
+                        Attr.class "font-bold px-4 py-2 text-sm leading-tight hover:bg-gray-100 hover:text-gray-900 flex items-center justify-between"
                       else
-                        Attr.class "px-4 py-2 text-sm leading-tight hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-900 dark:hover:text-gray-100 flex items-center justify-between"
+                        Attr.class "px-4 py-2 text-sm leading-tight hover:bg-gray-100 hover:text-gray-900 flex items-center justify-between"
                       )
                     , Attr.href "#"
                     , onClick ClickedFilter30d
@@ -455,9 +455,9 @@ viewDateMenu id model =
                 ]
                 [ a
                     [ (if model.filter == "all" then
-                        Attr.class "font-bold px-4 py-2 text-sm leading-tight hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-900 dark:hover:text-gray-100 flex items-center justify-between"
+                        Attr.class "font-bold px-4 py-2 text-sm leading-tight hover:bg-gray-100 hover:text-gray-900 flex items-center justify-between"
                       else
-                        Attr.class "px-4 py-2 text-sm leading-tight hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-900 dark:hover:text-gray-100 flex items-center justify-between"
+                        Attr.class "px-4 py-2 text-sm leading-tight hover:bg-gray-100 hover:text-gray-900 flex items-center justify-between"
                     )
                     , Attr.href "#"
                     , onClick ClickedFilterAll
@@ -480,10 +480,10 @@ viewWebsiteMenu websites =
             [ Attr.class "origin-top-left absolute left-0 mt-2 w-64 rounded-md shadow-lg"
             ]
             [ div
-                [ Attr.class "rounded-md bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5"
+                [ Attr.class "rounded-md bg-white ring-1 ring-black ring-opacity-5"
                 ]
                 [ div
-                    [ Attr.class "border-t border-gray-200 dark:border-gray-500"
+                    [ Attr.class "border-t border-gray-200"
                     ]
                     []
                 , div
@@ -491,7 +491,7 @@ viewWebsiteMenu websites =
                     ]
                     (List.map viewWebsiteDomain websites)
                 , div
-                    [ Attr.class "border-t border-gray-200 dark:border-gray-500"
+                    [ Attr.class "border-t border-gray-200"
                     ]
                     []
                 ]
@@ -504,7 +504,7 @@ viewWebsiteDomain website =
         Just w ->
             a
                 [ Attr.href (Route.toHref (Route.Website__View__Id_ {id=w.id}))
-                , Attr.class "flex items-center justify-between truncate px-4 py-2 md:text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-900 dark:focus:text-gray-100"
+                , Attr.class "flex items-center justify-between truncate px-4 py-2 md:text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
                 ]
                 [ span []
                     [ span
