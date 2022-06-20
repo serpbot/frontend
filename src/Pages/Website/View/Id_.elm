@@ -264,46 +264,51 @@ view shared req user model =
 viewMain: Model -> String -> Html Msg
 viewMain model id =
     main_ [ ]
-        [ div
+        [div
             [ Attr.class "max-w-7xl mx-auto sm:px-6 lg:px-8"
             ]
             [ div
-                [ Attr.attribute "lass" "container pt-6"
+                [ Attr.class "px-4 py-8 sm:px-0"
                 ]
+
                 [ div
-                    [ Attr.class "mt-6 pb-5 border-b border-gray-200 flex items-center justify-between"
+                    [ Attr.attribute "lass" "container pt-6"
                     ]
-                    [ h2
-                        [ Attr.class "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate flex-shrink-0"
+                    [ div
+                        [ Attr.class "mt-6 pb-5 border-b border-gray-200 flex items-center justify-between"
                         ]
-                        [ text "Website Stats" ]
-                    ]
-                , viewFilter model id
-                , br [] []
-                , ul
-                    [ Attr.attribute "role" "list"
-                    , Attr.class "space-y-3"
-                    ]
-                    [ li
-                        [ Attr.class "bg-white shadow overflow-hidden rounded-md px-6 py-4"
-                        ]
-                        [ div [ Attr.class "text-xl" ] [ text "Google" ]
-                        , canvas
-                            [ Attr.id "google"
+                        [ h2
+                            [ Attr.class "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate flex-shrink-0"
                             ]
-                            []
+                            [ text "Website Stats" ]
                         ]
-                    , li
-                        [ Attr.class "bg-white shadow overflow-hidden rounded-md px-6 py-4"
+                    , viewFilter model id
+                    , br [] []
+                    , ul
+                        [ Attr.attribute "role" "list"
+                        , Attr.class "space-y-3"
                         ]
-                        [ div [ Attr.class "text-xl" ] [ text "Bing" ]
-                        , canvas
-                            [ Attr.id "bing"
+                        [ li
+                            [ Attr.class "bg-white shadow overflow-hidden rounded-md px-6 py-4"
                             ]
-                            []
+                            [ div [ Attr.class "text-xl" ] [ text "Google" ]
+                            , canvas
+                                [ Attr.id "google"
+                                ]
+                                []
+                            ]
+                        , li
+                            [ Attr.class "bg-white shadow overflow-hidden rounded-md px-6 py-4"
+                            ]
+                            [ div [ Attr.class "text-xl" ] [ text "Bing" ]
+                            , canvas
+                                [ Attr.id "bing"
+                                ]
+                                []
+                            ]
                         ]
+                    , br [] []
                     ]
-                , br [] []
                 ]
             ]
         ]

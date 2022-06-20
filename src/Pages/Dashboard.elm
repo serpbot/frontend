@@ -136,37 +136,37 @@ viewMain model =
             [ Attr.class "max-w-7xl mx-auto sm:px-6 lg:px-8"
             ]
             [ div
-                        [ Attr.class "px-4 py-8 sm:px-0"
-                        ]
-                        [ div
-                            [ Attr.attribute "lass" "container pt-6"
-                            ]
-                            [ div
-                                [ Attr.class "mt-6 pb-5 border-b border-gray-200 flex items-center justify-between"
-                                ]
-                                [ h2
-                                    [ Attr.class "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate flex-shrink-0"
-                                    ]
-                                    [ text "My sites" ]
-                                , a
-                                    [ Attr.href (Route.toHref Route.Website__Add)
-                                    , Attr.class "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                    ]
-                                    [ text "+ Add a website" ]
-                                ]
-                            , br [] []
-                            ,
-                            if (List.length model.websites) == 0 then
-                                viewInfoMessage
-                            else
-                                div [] []
-                            , ul
-                                [ Attr.class "my-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-                                ]
-                                (List.map viewWebsite model.websites)
-                            ]
-                        ]
+                [ Attr.class "px-4 py-8 sm:px-0"
+                ]
+                [ div
+                    [ Attr.attribute "lass" "container pt-6"
                     ]
+                    [ div
+                        [ Attr.class "mt-6 pb-5 border-b border-gray-200 flex items-center justify-between"
+                        ]
+                        [ h2
+                            [ Attr.class "text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate flex-shrink-0"
+                            ]
+                            [ text "My sites" ]
+                        , a
+                            [ Attr.href (Route.toHref Route.Website__Add)
+                            , Attr.class "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            ]
+                            [ text "+ Add a website" ]
+                        ]
+                    , br [] []
+                    ,
+                    if (List.length model.websites) == 0 then
+                        viewInfoMessage
+                    else
+                        div [] []
+                    , ul
+                        [ Attr.class "my-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                        ]
+                        (List.map viewWebsite model.websites)
+                    ]
+                ]
+            ]
         ]
 
 
