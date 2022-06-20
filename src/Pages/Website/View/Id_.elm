@@ -46,6 +46,7 @@ type alias Model =
     , filterDropdown: Bool
     , domain: String
     , filter: String
+    , mobile: Bool
     }
 
 type Msg
@@ -54,6 +55,7 @@ type Msg
     | AllWebsitesFormSentResp (Result Http.Error Response)
     | WebsiteFormSentResp (Result Http.Error Response)
     | ClickedAccount
+    | ClickedMobileMenu
     | ClickedWebsiteDropdown
     | ClickedFilterDropdown
     | ClickedFilter7d
@@ -63,7 +65,7 @@ type Msg
 init: Request.With Params -> Shared.Model -> User -> (Model, Cmd Msg)
 init req shared user=
     let
-        model = Model Loading False [] False False "" "30d"
+        model = Model Loading False [] False False "" "30d" False
     in
     ( model
     , Cmd.batch [ getTrendGoogle req.params.id "30d" shared.env user
@@ -173,6 +175,13 @@ update req shared user msg model =
             else
                 ({ model | extended = True }, Cmd.none)
 
+
+        ClickedMobileMenu ->
+            if model.mobile then
+                ({ model | mobile = False }, Cmd.none)
+            else
+                ({ model | mobile = True }, Cmd.none)
+
         ClickedWebsiteDropdown ->
             if model.websiteDropdown then
                 ({ model | websiteDropdown = False }, Cmd.none)
@@ -237,7 +246,6 @@ update req shared user msg model =
 
 
 
-
 -- View
 
 view : Shared.Model -> Request.With Params -> User -> Model -> View Msg
@@ -246,7 +254,7 @@ view shared req user model =
     , body = [ div
                 [ class "bg-gray-50"
                 ]
-                [ viewHeader (Just user) ClickedAccount model.extended
+                [ viewHeader (Just user) ClickedAccount model.extended ClickedMobileMenu model.mobile
                 , viewMain model req.params.id
                 , viewFooter shared.year
                 ]

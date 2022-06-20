@@ -44,6 +44,7 @@ type alias Model =
     , password: String
     , recaptcha: String
     , status: Status
+    , mobile: Bool
     }
 
 type Msg
@@ -54,11 +55,12 @@ type Msg
     | ReceivedCaptcha String
     | FormSentResp (Result Http.Error Response)
     | NoOp
+    | ClickedMobileMenu
 
 
 init: Storage -> Request -> (Model, Cmd Msg)
 init storage req =
-    let model = Model "" "" "" "" None
+    let model = Model "" "" "" "" None False
     in
     ( model
     , if storage.user /= Nothing && req.route == Gen.Route.Signup then
@@ -131,6 +133,12 @@ update shared msg model =
                 Err _ ->
                     ({ model | status = Failure "Unable to process request, please try again later" }, Shared.resetCaptcha ())
 
+        ClickedMobileMenu ->
+            if model.mobile then
+                ({ model | mobile = False }, Cmd.none)
+            else
+                ({ model | mobile = True }, Cmd.none)
+
         _ ->
             (model, Cmd.none)
 
@@ -152,7 +160,7 @@ view shared model =
     , body = [ div
                 [ class "bg-gray-50 h-screen"
                 ]
-                [ viewHeader shared.storage.user NoOp False
+                [ viewHeader shared.storage.user NoOp False ClickedMobileMenu model.mobile
                 , viewMain model
                 , viewFooter shared.year
                 ]

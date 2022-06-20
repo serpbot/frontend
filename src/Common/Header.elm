@@ -2,14 +2,14 @@ module Common.Header exposing (viewHeader)
 
 import Domain.User exposing (User)
 import Gen.Route as Route
-import Html exposing (Html, a, button, div, header, img, li, nav, p, span, text, ul)
+import Html exposing (Html, a, br, button, div, header, img, li, nav, p, span, text, ul)
 import Html.Attributes as Attr
 import Html.Events exposing (onClick)
 import Svg exposing (path, svg)
 import Svg.Attributes as SvgAttr
 
-viewHeader: Maybe User -> msg -> Bool -> Html msg
-viewHeader user msg extended =
+viewHeader: Maybe User -> msg -> Bool -> msg -> Bool -> Html msg
+viewHeader user clickedAccount extended clickedMobile mobile =
     header []
         [ div
             [ Attr.class "bg-gray-50"
@@ -45,12 +45,13 @@ viewHeader user msg extended =
                         [ Attr.type_ "button"
                         , Attr.class "bg-gray-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                         , Attr.attribute "aria-expanded" "false"
+                        , onClick clickedMobile
                         ]
                         [ span
                             [ Attr.class "sr-only"
                             ]
                             [ text "Open menu" ]
-                        ,                         {- Heroicon name: outline/menu -}
+                        ,
                         svg
                             [ SvgAttr.class "h-6 w-6"
                             , SvgAttr.fill "none"
@@ -100,8 +101,7 @@ viewHeader user msg extended =
                                             ]
                                             [ button
                                                 [ Attr.class "pl-2 mr-2 truncate font-bold"
-
-                                                , onClick msg
+                                                , onClick clickedAccount
                                                 ]
                                                 [ text u.username ]
                                             , svg
@@ -112,7 +112,7 @@ viewHeader user msg extended =
                                                 , SvgAttr.viewBox "0 0 512 640"
                                                 , SvgAttr.enableBackground "new 0 0 512 512"
                                                 , SvgAttr.xmlSpace "preserve"
-                                                , onClick msg
+                                                , onClick clickedAccount
                                                 ]
                                                 [ Svg.g []
                                                     [ Svg.circle
@@ -180,6 +180,107 @@ viewHeader user msg extended =
                                 [ text "Sign up" ]
                             ]
                     )
+                , viewMobileMenu user clickedMobile mobile
+                ]
+            ]
+        ]
+
+viewMobileMenu: Maybe User -> msg -> Bool -> Html msg
+viewMobileMenu user clickedMobile mobile =
+    div
+        [ (if mobile then
+            Attr.class "absolute z-30 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+           else
+            Attr.class "hidden absolute z-30 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+          )
+        ]
+        [ div
+            [ Attr.class "rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-gray-50 divide-y-2 divide-gray-50"
+            ]
+            [ div
+                [ Attr.class "pt-5 pb-6 px-5"
+                ]
+                [ div
+                    [ Attr.class "flex items-center justify-between"
+                    ]
+                    [ a [ (case user of
+                            Just _ -> Attr.href (Route.toHref Route.Dashboard)
+                            _ -> Attr.href (Route.toHref Route.Home_)
+                        )]
+                        [ img
+                            [ Attr.class "h-8 w-auto"
+                            , Attr.src "/img/logo.png"
+                            , Attr.alt "Workflow"
+                            ]
+                            []
+                        ]
+                    , div
+                        [ Attr.class "-mr-2"
+                        ]
+                        [ button
+                            [ Attr.type_ "button"
+                            , Attr.class "bg-gray-50 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                            , onClick clickedMobile
+                            ]
+                            [ span
+                                [ Attr.class "sr-only"
+                                ]
+                                [ text "Close menu" ]
+                            ,
+                            svg
+                                [ SvgAttr.class "h-6 w-6"
+                                , SvgAttr.fill "none"
+                                , SvgAttr.viewBox "0 0 24 24"
+                                , SvgAttr.stroke "currentColor"
+                                , Attr.attribute "aria-hidden" "true"
+                                ]
+                                [ path
+                                    [ SvgAttr.strokeLinecap "round"
+                                    , SvgAttr.strokeLinejoin "round"
+                                    , SvgAttr.strokeWidth "2"
+                                    , SvgAttr.d "M6 18L18 6M6 6l12 12"
+                                    ]
+                                    []
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            , div
+                [ Attr.class "py-6 px-5"
+                ]
+                [ div
+                    [ Attr.class "mt-6"
+                    ]
+                    (case user of
+                        Just u ->
+                            [ a
+                                [ Attr.href (Route.toHref Route.Settings)
+                                , Attr.class "w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                                ]
+                                [ text "Settings" ]
+                            , br [] []
+                            , a
+                                [ Attr.href (Route.toHref Route.Logout)
+                                , Attr.class "w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                                ]
+                                [ text "Log out" ]
+                            ]
+                        Nothing ->
+                            [ a
+                                [ Attr.href (Route.toHref Route.Signup)
+                                , Attr.class "w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                                ]
+                                [ text "Sign up" ]
+                            , br [] []
+                            , a
+                                [ Attr.href (Route.toHref Route.Login)
+                                , Attr.class "w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                                ]
+                                [ text "Sign in" ]
+                            ]
+                    )
+
                 ]
             ]
         ]

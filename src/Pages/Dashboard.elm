@@ -40,16 +40,18 @@ type alias Model =
     { websites: List(Maybe Website)
     , status: Status
     , extended: Bool
+    , mobile: Bool
     }
 
 type Msg
     = FormSentResp (Result Http.Error Response)
     | ClickedAccount
+    | ClickedMobileMenu
 
 init: Shared.Model -> User -> (Model, Cmd Msg)
 init shared user =
     let
-        model = Model [] Loading False
+        model = Model [] Loading False False
     in
     getAllWebsites shared.env user model
 
@@ -105,7 +107,11 @@ update shared user msg model =
             else
                 ({ model | extended = True }, Cmd.none)
 
-
+        ClickedMobileMenu ->
+            if model.mobile then
+                ({ model | mobile = False }, Cmd.none)
+            else
+                ({ model | mobile = True }, Cmd.none)
 
 -- View
 
@@ -116,7 +122,7 @@ view shared user model =
     , body = [ div
                 [ class "bg-gray-50 h-screen"
                 ]
-                [ viewHeader (Just user) ClickedAccount model.extended
+                [ viewHeader (Just user) ClickedAccount model.extended ClickedMobileMenu model.mobile
                 , viewMain model
                 , viewFooter shared.year
                 ]
@@ -130,34 +136,39 @@ viewMain model =
             [ Attr.class "max-w-7xl mx-auto sm:px-6 lg:px-8"
             ]
             [ div
-                [ Attr.attribute "lass" "container pt-6"
-                ]
-                [ div
-                    [ Attr.class "mt-6 pb-5 border-b border-gray-200 dark:border-gray-500 flex items-center justify-between"
-                    ]
-                    [ h2
-                        [ Attr.class "text-2xl font-bold leading-7 text-gray-900 dark:text-gray-100 sm:text-3xl sm:leading-9 sm:truncate flex-shrink-0"
+                        [ Attr.class "px-4 py-8 sm:px-0"
                         ]
-                        [ text "My sites" ]
-                    , a
-                        [ Attr.href (Route.toHref Route.Website__Add)
-                        , Attr.class "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        [ div
+                            [ Attr.attribute "lass" "container pt-6"
+                            ]
+                            [ div
+                                [ Attr.class "mt-6 pb-5 border-b border-gray-200 dark:border-gray-500 flex items-center justify-between"
+                                ]
+                                [ h2
+                                    [ Attr.class "text-2xl font-bold leading-7 text-gray-900 dark:text-gray-100 sm:text-3xl sm:leading-9 sm:truncate flex-shrink-0"
+                                    ]
+                                    [ text "My sites" ]
+                                , a
+                                    [ Attr.href (Route.toHref Route.Website__Add)
+                                    , Attr.class "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    ]
+                                    [ text "+ Add a website" ]
+                                ]
+                            , br [] []
+                            ,
+                            if (List.length model.websites) == 0 then
+                                viewInfoMessage
+                            else
+                                div [] []
+                            , ul
+                                [ Attr.class "my-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                                ]
+                                (List.map viewWebsite model.websites)
+                            ]
                         ]
-                        [ text "+ Add a website" ]
                     ]
-                , br [] []
-                ,
-                if (List.length model.websites) == 0 then
-                    viewInfoMessage
-                else
-                    div [] []
-                , ul
-                    [ Attr.class "my-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-                    ]
-                    (List.map viewWebsite model.websites)
-                ]
-            ]
         ]
+
 
 viewWebsite: Maybe Website -> Html Msg
 viewWebsite maybeWebsite =

@@ -23,14 +23,16 @@ page shared _ =
 
 type alias Model =
     { extended: Bool
+    , mobile: Bool
     }
 
 type Msg
     = ClickedAccount
+    | ClickedMobileMenu
 
 init: (Model, Cmd Msg)
 init =
-    (Model False, Cmd.none)
+    (Model False False, Cmd.none)
 
 
 -- Update
@@ -44,6 +46,12 @@ update msg model =
             else
                 ({ model | extended = True }, Cmd.none)
 
+        ClickedMobileMenu ->
+            if model.mobile then
+                ({ model | mobile = False }, Cmd.none)
+            else
+                ({ model | mobile = True }, Cmd.none)
+
 -- View
 
 
@@ -53,7 +61,7 @@ view shared model =
     , body = [ div
                 [ class "flex flex-col h-screen justify-between bg-gray-50"
                 ]
-                [ viewHeader shared.storage.user ClickedAccount model.extended
+                [ viewHeader shared.storage.user ClickedAccount model.extended ClickedMobileMenu model.mobile
                 , viewMain
                 , viewFooter shared.year
                 ]

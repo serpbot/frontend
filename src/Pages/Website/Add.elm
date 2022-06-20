@@ -43,6 +43,7 @@ type alias Model =
     , keywords: List(String)
     , status: Status
     , extended: Bool
+    , mobile: Bool
     }
 
 type Msg
@@ -53,10 +54,11 @@ type Msg
     | ClickedAddWebsite
     | FormSentResp (Result Http.Error Response)
     | ClickedAccount
+    | ClickedMobileMenu
 
 init: (Model, Cmd Msg)
 init =
-    (Model "" "" [] None False, Cmd.none)
+    (Model "" "" [] None False False, Cmd.none)
 
 
 -- Update
@@ -138,7 +140,11 @@ update shared user req msg model =
             else
                 ({ model | extended = True }, Cmd.none)
 
-
+        ClickedMobileMenu ->
+            if model.mobile then
+                ({ model | mobile = False }, Cmd.none)
+            else
+                ({ model | mobile = True }, Cmd.none)
 -- View
 
 
@@ -148,7 +154,7 @@ view shared user model =
     , body = [ div
                 [ class "bg-gray-50 h-screen"
                 ]
-                [ viewHeader (Just user) ClickedAccount model.extended
+                [ viewHeader (Just user) ClickedAccount model.extended ClickedMobileMenu model.mobile
                 , viewMain model
                 , viewFooter shared.year
                 ]

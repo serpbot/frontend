@@ -44,6 +44,7 @@ type alias Model =
     , keyword: String
     , status: Status
     , extended: Bool
+    , mobile: Bool
     }
 
 type Msg
@@ -56,11 +57,12 @@ type Msg
     | InitialFormSentResp (Result Http.Error Response)
     | DeleteFormSentResp (Result Http.Error Response)
     | ClickedAccount
+    | ClickedMobileMenu
 
 init: Request.With Params -> Shared.Model -> User -> (Model, Cmd Msg)
 init req shared user =
     let
-        model = Model "" [] "" Loading False
+        model = Model "" [] "" Loading False False
     in
     (getWebsite req.params.id shared.env user model)
 
@@ -194,6 +196,11 @@ update req user shared msg model =
             else
                 ({ model | extended = True }, Cmd.none)
 
+        ClickedMobileMenu ->
+            if model.mobile then
+                ({ model | mobile = False }, Cmd.none)
+            else
+                ({ model | mobile = True }, Cmd.none)
 
 -- View
 
@@ -204,7 +211,7 @@ view shared user model =
     , body = [ div
                 [ class "bg-gray-50 h-screen"
                 ]
-                [ viewHeader (Just user) ClickedAccount model.extended
+                [ viewHeader (Just user) ClickedAccount model.extended ClickedMobileMenu model.mobile
                 , viewMain model
                 , viewFooter shared.year
                 ]

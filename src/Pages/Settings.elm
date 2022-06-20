@@ -33,6 +33,7 @@ type alias Model =
     { status: Status
     , toggled: Bool
     , extended: Bool
+    , mobile: Bool
     }
 
 type Status
@@ -45,11 +46,12 @@ type Msg
     = ClickedSave
     | ClickedToggle
     | ClickedAccount
+    | ClickedMobileMenu
     | FormSentResp (Result Http.Error Response)
 
 init: User -> (Model, Cmd Msg)
 init user =
-    (Model Loading user.notifications False, Cmd.none)
+    (Model Loading user.notifications False False, Cmd.none)
 
 
 -- Update
@@ -87,6 +89,12 @@ update shared user msg model =
             else
                 ({ model | extended = True }, Cmd.none)
 
+        ClickedMobileMenu ->
+            if model.mobile then
+                ({ model | mobile = False }, Cmd.none)
+            else
+                ({ model | mobile = True }, Cmd.none)
+
         ClickedToggle ->
             if model.toggled then
                 ({model | toggled = False}, Cmd.none)
@@ -116,7 +124,7 @@ view shared model =
     , body = [ div
                 [ class "flex flex-col h-screen justify-between bg-gray-50"
                 ]
-                [ viewHeader shared.storage.user ClickedAccount model.extended
+                [ viewHeader shared.storage.user ClickedAccount model.extended ClickedMobileMenu model.mobile
                 , viewMain model
                 , viewFooter shared.year
                 ]
